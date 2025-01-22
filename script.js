@@ -1,34 +1,29 @@
 fetch("https://striveschool-api.herokuapp.com/books")
-  .then((responseObj) => {
-    console.log(responseObj);
-
-    if (responseObj.ok) {
-      return responseObj.json();
+  .then((response) => {
+    console.log(response);
+    if (response.ok) {
+      return response.json();
     }
   })
-  .then((bookObj) => {
-    console.log(bookObj);
+  .then((booksArr) => {
+    console.log(booksArr);
 
-    // DOM MANIPULATION
-    const row = document.getElementById("book-list");
-
-    bookObj.data.forEach((booksInfo) => {
+    const row = document.getElementById("book-grid");
+    booksArr.array.forEach((book) => {
       const col = document.createElement("div");
       col.classList.add("col");
 
-      col.innerHTML = `<div class="col-4">
+      col.innerHTML = `
+      <div class="col">
           <div class="card">
-            <img src="${booksInfo.img}" class="card-img-top" alt="..." />
+            <img src="${book.img}" class="card-img-top" alt="${book.title}" />
             <div class="card-body">
-              <h5 class="card-title">${booksInfo.title}</h5>
-              <p id="price" class="card-text">${booksInfo.price}</p>
-              <p id="category" class="card-text">${booksInfo.category}</p>
-              <a href="#" class="btn btn-dark">Go somewhere</a>
+              <h5 class="card-title">${book.title}</h5>
+              <p id="price" class="card-text">${book.price}</p>
+              <p id="category" class="card-text">${book.category}</p>
             </div>
           </div>
-        </div>`;
-
-      row.appendChild(col);
+        </div>
+        `;
     });
-  })
-  .catch((err) => console.log(err));
+  });
